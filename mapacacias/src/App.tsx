@@ -1,10 +1,4 @@
-import {
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Select,
-} from "@chakra-ui/react";
+import { Heading, Input, InputGroup, InputRightElement, Select } from "@chakra-ui/react";
 import "./App.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -24,13 +18,13 @@ function App() {
           <InputGroup>
             <Input placeholder="Buscar" backgroundColor="white" />
             <InputRightElement>
-              <SearchIcon />
+              <SearchIcon/>
             </InputRightElement>
           </InputGroup>
         </div>
         <MapContainer
           center={[3.9871, -73.7649]}
-          zoom={15}
+          zoom={16}
           scrollWheelZoom={false}
         >
           <TileLayer
