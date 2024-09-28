@@ -17,19 +17,50 @@ import {
 import "./App.css";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Places } from "./models";
+import { CategoriesService, PlacesCategoryService, PlacesDefaultService } from "./service";
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const [categories, setCategories] = useState(Array<string>)
+  const [places, setPlaces] = useState(Array<Places>)
 
+  const getCategories = async () => {
+    const response = await CategoriesService()
+    console.log(categories)
+    setCategories(response)
+  }
+
+  const getPlaces = async () => {
+    const response = await PlacesDefaultService()
+    setPlaces(response)
+  }
+  
+  const getPlacesByCategory = async (category: string) => {
+    const response = await PlacesCategoryService(category)
+    setPlaces(response)
+  }
+
+  const updateCategories = (category: string) => {
+    getPlacesByCategory(category)
+  }
+
+  useEffect(() => {
+    getCategories()
+    getPlaces()
+  }, [])
   return (
     <div className="container">
       <section className="menu">
         <Heading>Sitio de interes Acacias</Heading>
-        <Select placeholder="Selecionar Categoria">
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+        <Select 
+          placeholder="Selecionar Categoria"
+          onChange={(e) => updateCategories(e.target.value)}
+        >
+          {categories.map((x) => {return (
+            <option key={"select"+x} value={x}>{x}</option>
+          )})}
         </Select>
       </section>
       <section className="map">
@@ -50,10 +81,14 @@ function App() {
             attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
           />
-          <Marker
-            position={[3.9871, -73.7649]}
+          {places.map((x) => {
+            return (
+            <Marker
+            key={"Marker"+x.numero}
+            position={[Number(x.latitudn), Number(x.longitudw)]}
             eventHandlers={{ click: onOpen }}
           ></Marker>
+          )})}
         </MapContainer>
       </section>
       <AlertDialog
