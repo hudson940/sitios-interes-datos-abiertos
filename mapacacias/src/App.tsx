@@ -161,7 +161,7 @@ function App() {
         <MapContainer center={coor} zoom={zoom} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+            url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
           />
           {places.map((x,index) => {
             return (
