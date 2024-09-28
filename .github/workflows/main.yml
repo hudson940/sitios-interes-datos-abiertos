@@ -35,6 +35,8 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: go to folder
+        run: cd mapacacias
       - name: Install dependencies
         run: npm ci
       - name: Build
