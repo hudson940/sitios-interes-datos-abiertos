@@ -29,3 +29,7 @@
 
     z-index: 1000;
 }
+
+.chakra-input:focus {
+  background-color: white !important;
+}

@@ -8,7 +8,6 @@ import {
   AlertDialogOverlay,
   Button,
   Heading,
-  Input,
   InputGroup,
   InputRightElement,
   Select,
@@ -18,9 +17,27 @@ import "./App.css";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useRef } from "react";
+import { icons } from "./Icons/icons-maps";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteList,
+  AutoCompleteItem,
+} from "@choc-ui/chakra-autocomplete";
+export interface Item {
+  label: string;
+  value: string;
+}
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const countries = [
+    "nigeria",
+    "japan",
+    "india",
+    "united states",
+    "south korea",
+  ];
 
   return (
     <div className="container">
@@ -35,7 +52,21 @@ function App() {
       <section className="map">
         <div className="search">
           <InputGroup>
-            <Input placeholder="Buscar" backgroundColor="white" />
+            <AutoComplete openOnFocus>
+              <AutoCompleteInput variant="filled" />
+              <AutoCompleteList>
+                {countries.map((country, cid) => (
+                  <AutoCompleteItem
+                    key={`option-${cid}`}
+                    value={country}
+                    textTransform="capitalize"
+                    onClick={() => alert(cid)}
+                  >
+                    {country}
+                  </AutoCompleteItem>
+                ))}
+              </AutoCompleteList>
+            </AutoComplete>
             <InputRightElement>
               <SearchIcon />
             </InputRightElement>
@@ -53,6 +84,7 @@ function App() {
           <Marker
             position={[3.9871, -73.7649]}
             eventHandlers={{ click: onOpen }}
+            icon={icons["hoteles"]}
           ></Marker>
         </MapContainer>
       </section>
