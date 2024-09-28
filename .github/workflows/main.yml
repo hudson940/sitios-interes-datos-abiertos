@@ -35,12 +35,12 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: go to folder
-        run: cd mapacacias
       - name: Install dependencies
         run: npm ci
+        working-directory: mapacacias
       - name: Build
         run: npm run build
+        working-directory: mapacacias
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
